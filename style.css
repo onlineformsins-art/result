@@ -450,6 +450,7 @@ footer {
     max-width: 800px !important;
     margin: 0 auto !important;
     padding: 40px !important;
+    display: block !important;
 }
 
 .pdf-export-mode * {
@@ -462,20 +463,38 @@ footer {
     background: none !important;
 }
 
+/* Fix CSS Grid issues in html2canvas by falling back to flexbox */
+.pdf-export-mode .subjects-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 20px !important;
+}
+
 .pdf-export-mode .subject-card {
     border: 1px solid #e2e8f0 !important;
     box-shadow: none !important;
     background: #f8fafc !important;
     page-break-inside: avoid !important;
+    flex: 1 1 calc(33.333% - 20px) !important; /* Force 3 columns */
+    min-width: 150px !important;
+    box-sizing: border-box !important;
 }
 
 .pdf-export-mode .summary-grid {
     background: #f8fafc !important;
     border: 1px solid #e2e8f0 !important;
     page-break-inside: avoid !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+}
+
+.pdf-export-mode .summary-item {
+    flex: 1 !important;
 }
 
 .pdf-export-mode .value-grade {
     background: none !important;
     border: 1px solid #10b981 !important;
+    display: inline-block !important;
 }
