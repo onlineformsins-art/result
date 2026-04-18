@@ -47,6 +47,34 @@
         </section>
     </main>
 
+    <!-- Hidden PDF Template for clean export -->
+    <div id="pdfTemplate" style="display: none; padding: 40px; background: white; color: black; font-family: sans-serif;">
+        <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 30px;">
+            <h1 style="margin: 0; font-size: 28px; color: #000;">Official Exam Result Sheet</h1>
+        </div>
+        
+        <div style="margin-bottom: 30px; font-size: 18px;">
+            <p style="margin: 5px 0;"><strong>Student Name:</strong> <span id="pdfName"></span></p>
+            <p style="margin: 5px 0;"><strong>Index Number:</strong> <span id="pdfIndex"></span></p>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;" id="pdfTable">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #000; padding: 12px; text-align: left; background-color: #f0f0f0;">Subject</th>
+                    <th style="border: 1px solid #000; padding: 12px; text-align: center; background-color: #f0f0f0;">Marks</th>
+                </tr>
+            </thead>
+            <tbody id="pdfTableBody">
+                <!-- Subject rows will be injected here -->
+            </tbody>
+        </table>
+
+        <div id="pdfSummary" style="display: flex; justify-content: space-between; border: 2px solid #000; padding: 20px; font-size: 18px; font-weight: bold; background-color: #f9f9f9;">
+            <!-- Summary will be injected here -->
+        </div>
+    </div>
+
     <footer>
         <p>&copy; <span id="year"></span> Exam Results Portal. All rights reserved.</p>
     </footer>

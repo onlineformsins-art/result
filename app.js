@@ -188,19 +188,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add event listener for PDF download
         document.getElementById('downloadPdfBtn').addEventListener('click', () => {
-            const element = document.querySelector('.result-card');
+            // Populate the hidden PDF template
+            document.getElementById('pdfName').textContent = name;
+            document.getElementById('pdfIndex').textContent = id;
             
-            // Add export mode class to fix rendering
-            element.classList.add('pdf-export-mode');
+            const pdfTableBody = document.getElementById('pdfTableBody');
+            pdfTableBody.innerHTML = '';
+            
+            if (subjects.length > 0) {
+                subjects.forEach(sub => {
+                    pdfTableBody.innerHTML += `
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 12px; text-align: left;">${sub.name}</td>
+                            <td style="border: 1px solid #000; padding: 12px; text-align: center; font-weight: bold;">${sub.mark}</td>
+                        </tr>
+                    `;
+                });
+            } else {
+                pdfTableBody.innerHTML = `<tr><td colspan="2" style="border: 1px solid #000; padding: 12px; text-align: center;">No subject marks found</td></tr>`;
+            }
+
+            const pdfSummary = document.getElementById('pdfSummary');
+            pdfSummary.innerHTML = '';
+            if (total !== '-') pdfSummary.innerHTML += `<div>Total: ${total}</div>`;
+            if (average !== '-') pdfSummary.innerHTML += `<div>Average: ${average}</div>`;
+            if (grade !== '-') pdfSummary.innerHTML += `<div>Grade: ${grade}</div>`;
+
+            const element = document.getElementById('pdfTemplate');
+            
+            // Temporarily show it for html2pdf to capture it
+            element.style.display = 'block';
 
             const opt = {
-                margin:       [15, 15, 15, 15],
-                filename:     `${id}_result.pdf`,
+                margin:       [20, 20, 20, 20],
+                filename:     `${id}_Full_Result_Sheet.pdf`,
                 image:        { type: 'jpeg', quality: 1.0 },
                 html2canvas:  { 
                     scale: 2,
                     useCORS: true,
-                    windowWidth: 1000,
                     logging: false
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -213,13 +238,12 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             html2pdf().set(opt).from(element).save().then(() => {
-                // Remove export mode class
-                element.classList.remove('pdf-export-mode');
+                element.style.display = 'none'; // Hide it again
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             }).catch(err => {
                 console.error("PDF Generation Error", err);
-                element.classList.remove('pdf-export-mode');
+                element.style.display = 'none'; // Hide it again
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             });
