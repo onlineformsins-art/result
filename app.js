@@ -31,8 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Fetch the Excel file from the repository
-            // Change 'sample_results.xlsx' to 'results.xlsx' or whatever your actual file is named
-            const response = await fetch('results.xlsx');
+            // Added cache-busting timestamp to ensure the browser always gets the latest file!
+            const cacheBuster = new Date().getTime();
+            const response = await fetch(`results.xlsx?t=${cacheBuster}`);
             
             if (!response.ok) {
                 throw new Error('Could not find the results data file. Make sure results.xlsx is uploaded.');
