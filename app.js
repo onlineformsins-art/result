@@ -189,11 +189,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add event listener for PDF download
         document.getElementById('downloadPdfBtn').addEventListener('click', () => {
             const element = document.querySelector('.result-card');
+            
+            // Add export mode class to fix rendering
+            element.classList.add('pdf-export-mode');
+
             const opt = {
-                margin:       10,
+                margin:       [15, 15, 15, 15],
                 filename:     `${id}_result.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
+                image:        { type: 'jpeg', quality: 1.0 },
+                html2canvas:  { 
+                    scale: 2,
+                    useCORS: true,
+                    windowWidth: 1000,
+                    logging: false
+                },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
@@ -204,6 +213,13 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
             html2pdf().set(opt).from(element).save().then(() => {
+                // Remove export mode class
+                element.classList.remove('pdf-export-mode');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                console.error("PDF Generation Error", err);
+                element.classList.remove('pdf-export-mode');
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             });

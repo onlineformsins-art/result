@@ -437,3 +437,45 @@ footer {
     }
     .result-card { padding: 1.5rem; }
 }
+
+/* PDF Export Mode - fixes rendering issues with html2canvas */
+.pdf-export-mode {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #000000 !important;
+    width: 800px !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    padding: 40px !important;
+}
+
+.pdf-export-mode * {
+    color: #000000 !important;
+}
+
+.pdf-export-mode .student-name {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    background: none !important;
+}
+
+.pdf-export-mode .subject-card {
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+    background: #f8fafc !important;
+    page-break-inside: avoid !important;
+}
+
+.pdf-export-mode .summary-grid {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    page-break-inside: avoid !important;
+}
+
+.pdf-export-mode .value-grade {
+    background: none !important;
+    border: 1px solid #10b981 !important;
+}
