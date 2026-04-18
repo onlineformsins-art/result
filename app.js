@@ -175,9 +175,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 ` : ''}
             </div>
+            
+            <div class="action-buttons" style="text-align: center; margin-top: 2rem;">
+                <button id="downloadPdfBtn" class="download-btn">
+                    <i class="fa-solid fa-file-pdf"></i> Download Result as PDF
+                </button>
+            </div>
         `;
 
         resultContainer.innerHTML = html;
         resultContainer.classList.remove('hidden');
+
+        // Add event listener for PDF download
+        document.getElementById('downloadPdfBtn').addEventListener('click', () => {
+            const element = document.querySelector('.result-card');
+            const opt = {
+                margin:       10,
+                filename:     `${id}_result.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Change button text to show loading
+            const btn = document.getElementById('downloadPdfBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Generating PDF...';
+            btn.disabled = true;
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
     }
 });
